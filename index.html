@@ -22,23 +22,24 @@
 </head>
 <body>
   <div class="top-bar">
-    <a href="/nvo987.md">Télécharger / Voir le fichier brut (nvo987.md)</a>
+    <a href="./nvo987.md">Télécharger / Voir le fichier brut (nvo987.md)</a>
   </div>
   <div id="content">Chargement...</div>
 
   <script>
-    fetch('/nvo987.md?v=' + Date.now(), { cache: 'no-store' })
+    const mdUrl = './nvo987.md?cb=' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    fetch(mdUrl, { cache: 'no-store' })
       .then(res => {
-        if (!res.ok) throw new Error('Erreur de chargement');
+        if (!res.ok) throw new Error('HTTP ' + res.status + ' (' + res.statusText + ')');
         return res.text();
       })
       .then(md => {
         document.getElementById('content').innerHTML = marked.parse(md);
       })
-      .catch(() => {
-        document.getElementById('content').innerHTML = '<p>Impossible de charger nvo987.md.</p>';
+      .catch(err => {
+        document.getElementById('content').innerHTML =
+          '<p>Impossible de charger nvo987.md : <strong>' + err.message + '</strong></p>';
       });
   </script>
 </body>
 </html>
- 
